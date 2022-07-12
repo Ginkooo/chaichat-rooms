@@ -1,0 +1,22 @@
+services:
+  relay:
+    build: docker/relay
+    ports:
+      - "4001:4001"
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+  rooms:
+    build:
+      context: .
+      dockerfile: docker/rooms/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - .:/rooms

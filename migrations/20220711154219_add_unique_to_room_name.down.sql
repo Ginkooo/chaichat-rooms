@@ -1,0 +1,1 @@
+ALTER TABLE DROP CONSTRAINT uniq_name;

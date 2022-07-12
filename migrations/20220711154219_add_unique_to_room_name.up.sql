@@ -1,0 +1,2 @@
+ALTER TABLE room
+ADD CONSTRAINT uniq_name UNIQUE (name);
