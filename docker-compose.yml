@@ -18,5 +18,3 @@ services:
       - .env
     depends_on:
       - db
-    volumes:
-      - .:/rooms
