@@ -36,7 +36,7 @@ pub struct Rooms(sqlx::PgPool);
 fn rocket() -> Rocket<Build> {
     rocket::build()
         .attach(Rooms::init())
-        .mount("/", routes![get_rooms, add_room, join_room])
+        .mount("/", routes![get_rooms, add_room, join_room, delete_room])
 }
 
 fn get_connection() -> sqlx::PgPool {
@@ -146,6 +146,19 @@ async fn join_room(mut db: Connection<Rooms>, guest: Json<Guest>) -> Json<Guest>
     .await
     .unwrap();
     Json(guest.0)
+}
+
+#[delete("/rooms/<id>")]
+async fn delete_room(mut db: Connection<Rooms>, id: i32) {
+    sqlx::query(format!("DELETE FROM room WHERE id = {}", id).as_str())
+        .execute(&mut *db)
+        .await
+        .unwrap();
+
+    sqlx::query(format!("DELETE FROM guest WHERE room_id = {}", id).as_str())
+        .execute(&mut *db)
+        .await
+        .unwrap();
 }
 
 fn test_teardown() {
