@@ -1,1 +1,2 @@
+DROP TABLE guest;
 DROP TABLE room;
