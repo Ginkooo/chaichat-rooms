@@ -1,7 +1,7 @@
 CREATE TABLE room (
     id serial PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    CONSTRAINT name_unique UNIQUE (name)
+    UNIQUE(name)
 );
 
 CREATE TABLE guest (
@@ -12,8 +12,8 @@ CREATE TABLE guest (
     CONSTRAINT fk_room
         FOREIGN KEY(room_id)
             REFERENCES room(id),
-    CONSTRAINT unique_multiaddr UNIQUE multiaddr,
-    CONSTRAINT uniq_name UNIQUE name
+    UNIQUE(multiaddr),
+    UNIQUE(name)
 );
 
 INSERT INTO room (name) VALUES ('main');
